@@ -1,0 +1,1 @@
+# Shopping module frontend 
