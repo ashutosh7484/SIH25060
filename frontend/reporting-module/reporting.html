@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Report a Dumping Site</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .status-pending { color: gray; }
+    .status-active { color: blue; font-weight: bold; }
+    .status-completed { color: green; font-weight: bold; }
+  </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center">
+  <div class="max-w-5xl w-full bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Left Panel -->
+    <div>
+      <h1 class="text-3xl font-bold mb-4 text-green-600">Report a Dumping Site</h1>
+      <p class="mb-4 text-gray-600 dark:text-gray-300">
+        Upload a photo to report an unmanaged waste site.
+      </p>
+
+      <!-- File Upload -->
+      <div id="uploadArea" class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700">
+        <input type="file" id="fileInput" class="hidden" accept="image/*" />
+        <p class="text-gray-500 dark:text-gray-400">Drag & drop or <span class="text-blue-500 cursor-pointer" id="browseBtn">browse</span> to upload</p>
+      </div>
+      <div id="fileStatus" class="mt-4 hidden">
+        <p class="text-gray-700 dark:text-gray-200">File: <span id="fileName"></span></p>
+        <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+          <div id="progressBar" class="bg-green-500 h-2 rounded-full" style="width: 0%"></div>
+        </div>
+        <p id="progressPercent" class="text-sm mt-1 text-gray-500">0%</p>
+      </div>
+
+      <!-- Buttons -->
+      <div class="mt-6 flex space-x-4">
+        <button id="analyzeBtn" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">Analyze Waste</button>
+        <button id="geoBtn" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg">Get Location</button>
+        <button id="submitBtn" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg">Submit Report</button>
+      </div>
+    </div>
+
+    <!-- Right Panel -->
+    <div>
+      <h2 class="text-xl font-bold mb-4">Live Status</h2>
+      <ul id="statusList" class="space-y-3">
+        <li id="statusUpload" class="status-pending">📤 File Upload <span class="text-sm">Waiting for file...</span></li>
+        <li id="statusAnalyze" class="status-pending">👁 Waste Analysis <span class="text-sm">Waiting for upload...</span></li>
+        <li id="statusGeo" class="status-pending">📍 Geo-tagging <span class="text-sm">Waiting for analysis...</span></li>
+        <li id="statusSubmit" class="status-pending">✅ Report Submission <span class="text-sm">Waiting for geo-tagging...</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const uploadArea = document.getElementById("uploadArea");
+    const fileInput = document.getElementById("fileInput");
+    const browseBtn = document.getElementById("browseBtn");
+    const fileStatus = document.getElementById("fileStatus");
+    const fileName = document.getElementById("fileName");
+    const progressBar = document.getElementById("progressBar");
+    const progressPercent = document.getElementById("progressPercent");
+
+    const statusUpload = document.getElementById("statusUpload");
+    const statusAnalyze = document.getElementById("statusAnalyze");
+    const statusGeo = document.getElementById("statusGeo");
+    const statusSubmit = document.getElementById("statusSubmit");
+
+    const analyzeBtn = document.getElementById("analyzeBtn");
+    const geoBtn = document.getElementById("geoBtn");
+    const submitBtn = document.getElementById("submitBtn");
+
+    let fileData = null;
+    let geoData = null;
+
+    // Utility
+    function updateStatus(el, status, msg = "") {
+      el.classList.remove("status-pending", "status-active", "status-completed");
+      el.classList.add("status-" + status);
+      if (msg) el.querySelector("span").textContent = msg;
+    }
+
+    function showAlert(msg) {
+      alert(msg); // simple alert for now
+    }
+
+    // Upload
+    browseBtn.addEventListener("click", () => fileInput.click());
+    uploadArea.addEventListener("dragover", (e) => e.preventDefault());
+    uploadArea.addEventListener("drop", (e) => {
+      e.preventDefault();
+      handleFileUpload(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener("change", (e) => handleFileUpload(e.target.files[0]));
+
+    function handleFileUpload(file) {
+      if (!file) return;
+      fileData = file;
+      fileName.textContent = file.name;
+      fileStatus.classList.remove("hidden");
+
+      updateStatus(statusUpload, "active", "Uploading...");
+      let progress = 0;
+      const interval = setInterval(() => {
+        if (progress >= 100) {
+          clearInterval(interval);
+          updateStatus(statusUpload, "completed", "File uploaded successfully!");
+          return;
+        }
+        progress += 20;
+        progressBar.style.width = `${progress}%`;
+        progressPercent.textContent = `${progress}%`;
+      }, 400);
+    }
+
+    // Analyze Waste (placeholder only)
+    analyzeBtn.addEventListener("click", () => {
+      if (!fileData) return showAlert("Please upload a file first!");
+      updateStatus(statusAnalyze, "active", "Analyzing...");
+      setTimeout(() => {
+        updateStatus(statusAnalyze, "completed", "Waste identified (mocked)");
+      }, 1500);
+    });
+
+    // Geo-tagging
+    geoBtn.addEventListener("click", () => {
+      if (!fileData) return showAlert("Upload file before geo-tagging!");
+      updateStatus(statusGeo, "active", "Fetching location...");
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            geoData = {
+              latitude: pos.coords.latitude,
+              longitude: pos.coords.longitude
+            };
+            updateStatus(statusGeo, "completed", `Lat: ${geoData.latitude.toFixed(6)}, Lng: ${geoData.longitude.toFixed(6)}`);
+          },
+          () => updateStatus(statusGeo, "pending", "Location access denied!")
+        );
+      } else {
+        updateStatus(statusGeo, "pending", "Geolocation not supported");
+      }
+    });
+
+    // Submit
+    submitBtn.addEventListener("click", () => {
+      if (!fileData || !geoData) return showAlert("Upload file & get location first!");
+      updateStatus(statusSubmit, "active", "Submitting...");
+      setTimeout(() => {
+        updateStatus(statusSubmit, "completed", "Report submitted successfully!");
+        showAlert("✅ Report submitted!");
+      }, 1000);
+    });
+  </script>
+</body>
+</html>
