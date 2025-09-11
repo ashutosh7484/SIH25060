@@ -22,17 +22,17 @@ A complete ReactJS shopping application for waste management utilities with Mine
 
 ### Frontend Only (LocalStorage)
 
-\`\`\`bash
+```bash
 # Install dependencies
 npm install
 
 # Start development server
 npm start
-\`\`\`
+```
 
 ### With Backend
 
-\`\`\`bash
+```bash
 # Start backend (Terminal 1)
 cd backend
 npm install
@@ -40,11 +40,11 @@ npm run dev
 
 # Start frontend (Terminal 2)
 npm start
-\`\`\`
+```
 
 ## Project Structure
 
-\`\`\`
+```
 src/
 ├── components/          # Reusable UI components
 │   ├── Navbar.js       # Navigation with Minecoins display
@@ -72,7 +72,7 @@ backend/
 │   ├── carts.json      # User shopping carts
 │   └── orders.json     # Order history
 └── package.json        # Backend dependencies
-\`\`\`
+```
 
 ## API Endpoints
 
@@ -89,9 +89,9 @@ backend/
 
 Create `.env` file in root:
 
-\`\`\`
+```
 REACT_APP_API_URL=http://localhost:5000/api
-\`\`\`
+```
 
 ## Minecoins System
 
@@ -109,7 +109,7 @@ REACT_APP_API_URL=http://localhost:5000/api
 
 ## Development
 
-\`\`\`bash
+```bash
 # Frontend development
 npm start
 
@@ -119,7 +119,7 @@ npm run dev
 
 # Build for production
 npm run build
-\`\`\`
+```
 
 ## Deployment
 
