@@ -13,7 +13,7 @@ const products = [
     name: "Industrial Waste Bin",
     price: 550,
     category: "bins",
-    image: "/placeholder.svg?height=200&width=200",
+    image: "/industrial-waste-bin.png",
     description: "Heavy-duty waste bin for industrial use",
   },
   {
@@ -21,7 +21,7 @@ const products = [
     name: "Recycling Container",
     price: 149.99,
     category: "bins",
-    image: "/placeholder.svg?height=200&width=200",
+    image: "/recycling-container.png",
     description: "Multi-compartment recycling solution",
   },
   {
@@ -29,7 +29,7 @@ const products = [
     name: "Waste Compactor",
     price: 1299.99,
     category: "equipment",
-    image: "/placeholder.svg?height=200&width=200",
+    image: "/waste-compactor.png",
     description: "Efficient waste compression system",
   },
   {
@@ -37,7 +37,7 @@ const products = [
     name: "Safety Gloves",
     price: 24.99,
     category: "safety",
-    image: "/placeholder.svg?height=200&width=200",
+    image: "/safety-gloves.jpg",
     description: "Heavy-duty protective gloves",
   },
   {
@@ -45,7 +45,7 @@ const products = [
     name: "Hazmat Suit",
     price: 89.99,
     category: "safety",
-    image: "/placeholder.svg?height=200&width=200",
+    image: "/hazmat-suit.jpg",
     description: "Full body protection suit",
   },
   {
@@ -53,7 +53,7 @@ const products = [
     name: "Waste Sorting System",
     price: 2499.99,
     category: "equipment",
-    image: "/placeholder.svg?height=200&width=200",
+    image: "/waste-sorting-system.jpg",
     description: "Automated waste sorting solution",
   },
   {
@@ -61,17 +61,17 @@ const products = [
     name: "Compost Bin",
     price: 79.99,
     category: "bins",
-    image: "/placeholder.svg?height=200&width=200",
+    image: "/compost-bin.jpg",
     description: "Organic waste composting bin",
   },
-  {
-    id: 8,
-    name: "Waste Collection Truck",
-    price: 45000.0,
-    category: "vehicles",
-    image: "/placeholder.svg?height=200&width=200",
-    description: "Professional waste collection vehicle",
-  },
+  // {
+  //   id: 8,  
+  //   name: "Waste Collection Truck",
+  //   price: 45000.0,
+  //   category: "vehicles",
+  //   image: "/waste-collection-truck.jpg",
+  //   description: "Professional waste collection vehicle",
+  // },
 ]
 
 // Cart Context
@@ -237,10 +237,10 @@ function Navbar({ currentPage, setCurrentPage }) {
   const { coins } = useCoins()
 
   return (
-    <nav className="bg-green-600 text-white p-4 shadow-lg">
+    <nav className="bg-green-600 text-white p-2 shadow-lg">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <h1 className="text-2xl font-bold">Waste Utilities</h1>
+          <h1 className="text-2xl font-bold" style={{cursor: "pointer"}}>Waste Utilities</h1>
           <div className="hidden md:flex space-x-4">
             <Button
               variant={currentPage === "home" ? "secondary" : "ghost"}
@@ -302,7 +302,7 @@ function ProductCard({ product }) {
         </Badge>
       </CardContent>
       <CardFooter className="p-4 pt-0 flex items-center justify-between">
-        <span className="text-xl font-bold text-green-600">${product.price.toFixed(2)}</span>
+        <span className="text-xl font-bold text-green-600">Rs. {product.price.toFixed(0)}</span>
         <Button onClick={() => addToCart(product)} className="bg-green-600 hover:bg-green-700">
           <Plus className="h-4 w-4 mr-1" />
           Add to Cart
