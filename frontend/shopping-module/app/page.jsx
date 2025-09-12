@@ -13,7 +13,7 @@ const products = [
     name: "Industrial Waste Bin",
     price: 550,
     category: "bins",
-    image: "/industrial-waste-bin.png",
+    image: "/industrial-waste-bin.jpg",
     description: "Heavy-duty waste bin for industrial use",
   },
   {
@@ -373,7 +373,7 @@ function CartItem({ item }) {
       <img src={item.image || "/placeholder.svg"} alt={item.name} className="w-16 h-16 object-cover rounded" />
       <div className="flex-1">
         <h3 className="font-semibold">{item.name}</h3>
-        <p className="text-gray-600">${item.price.toFixed(2)} each</p>
+        <p className="text-gray-600">Rs. {item.price.toFixed(0)} each</p>
       </div>
       <div className="flex items-center space-x-2">
         <Button variant="outline" size="sm" onClick={() => updateQuantity(item.id, item.quantity - 1)}>
@@ -385,7 +385,7 @@ function CartItem({ item }) {
         </Button>
       </div>
       <div className="text-right">
-        <p className="font-semibold">${(item.price * item.quantity).toFixed(2)}</p>
+        <p className="font-semibold">Rs. {(item.price * item.quantity).toFixed(2)}</p>
         <Button
           variant="ghost"
           size="sm"
@@ -469,7 +469,7 @@ function CartPage() {
         <CardContent className="p-6">
           <div className="flex justify-between items-center mb-4">
             <span className="text-lg font-semibold">Total:</span>
-            <span className="text-2xl font-bold text-green-600">${getCartTotal().toFixed(2)}</span>
+            <span className="text-2xl font-bold text-green-600">Rs. {getCartTotal().toFixed(2)}</span>
           </div>
           <div className="flex space-x-4">
             <Button
