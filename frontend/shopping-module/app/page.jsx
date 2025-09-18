@@ -11,7 +11,7 @@ const products = [
   {
     id: 1,
     name: "Industrial Waste Bin",
-    price: 550,
+    price: 4850,
     category: "bins",
     image: "/industrial-waste-bin.jpg",
     description: "Heavy-duty waste bin for industrial use",
@@ -19,7 +19,7 @@ const products = [
   {
     id: 2,
     name: "Recycling Container",
-    price: 149.99,
+    price: 2200,
     category: "bins",
     image: "/recycling-container.png",
     description: "Multi-compartment recycling solution",
@@ -27,7 +27,7 @@ const products = [
   {
     id: 3,
     name: "Waste Compactor",
-    price: 1299.99,
+    price: 20000,
     category: "equipment",
     image: "/waste-compactor.png",
     description: "Efficient waste compression system",
@@ -35,7 +35,7 @@ const products = [
   {
     id: 4,
     name: "Safety Gloves",
-    price: 24.99,
+    price: 440,
     category: "safety",
     image: "/safety-gloves.jpg",
     description: "Heavy-duty protective gloves",
@@ -43,7 +43,7 @@ const products = [
   {
     id: 5,
     name: "Hazmat Suit",
-    price: 89.99,
+    price: 2500,
     category: "safety",
     image: "/hazmat-suit.jpg",
     description: "Full body protection suit",
@@ -51,7 +51,7 @@ const products = [
   {
     id: 6,
     name: "Waste Sorting System",
-    price: 2499.99,
+    price: 92000,
     category: "equipment",
     image: "/waste-sorting-system.jpg",
     description: "Automated waste sorting solution",
@@ -59,7 +59,7 @@ const products = [
   {
     id: 7,
     name: "Compost Bin",
-    price: 79.99,
+    price: 6000,
     category: "bins",
     image: "/compost-bin.jpg",
     description: "Organic waste composting bin",
@@ -302,7 +302,7 @@ function ProductCard({ product }) {
         </Badge>
       </CardContent>
       <CardFooter className="p-4 pt-0 flex items-center justify-between">
-        <span className="text-xl font-bold text-green-600">Rs. {product.price.toFixed(0)}</span>
+        <span className="text-xl font-bold text-green-600">₹{product.price.toFixed(0)}</span>
         <Button onClick={() => addToCart(product)} className="bg-green-600 hover:bg-green-700">
           <Plus className="h-4 w-4 mr-1" />
           Add to Cart
@@ -373,7 +373,7 @@ function CartItem({ item }) {
       <img src={item.image || "/placeholder.svg"} alt={item.name} className="w-16 h-16 object-cover rounded" />
       <div className="flex-1">
         <h3 className="font-semibold">{item.name}</h3>
-        <p className="text-gray-600">Rs. {item.price.toFixed(0)} each</p>
+        <p className="text-gray-600">₹{item.price.toFixed(0)} each</p>
       </div>
       <div className="flex items-center space-x-2">
         <Button variant="outline" size="sm" onClick={() => updateQuantity(item.id, item.quantity - 1)}>
@@ -385,7 +385,7 @@ function CartItem({ item }) {
         </Button>
       </div>
       <div className="text-right">
-        <p className="font-semibold">Rs. {(item.price * item.quantity).toFixed(2)}</p>
+        <p className="font-semibold">₹{(item.price * item.quantity).toFixed(2)}</p>
         <Button
           variant="ghost"
           size="sm"
@@ -469,7 +469,7 @@ function CartPage() {
         <CardContent className="p-6">
           <div className="flex justify-between items-center mb-4">
             <span className="text-lg font-semibold">Total:</span>
-            <span className="text-2xl font-bold text-green-600">Rs. {getCartTotal().toFixed(2)}</span>
+            <span className="text-2xl font-bold text-green-600">₹{getCartTotal().toFixed(2)}</span>
           </div>
           <div className="flex space-x-4">
             <Button
